@@ -40,5 +40,15 @@ public class CircularListTest {
         assertFalse(circularListImpl.isEmpty());
     }
 
-    
+
+    @Test
+    void testNext() {
+        circularListImpl.add(1);
+        circularListImpl.add(2);
+        circularListImpl.add(3);
+        assertEquals(2,circularListImpl.next().get());
+        assertEquals(3,circularListImpl.next().get());
+        assertEquals(1,circularListImpl.next().get());
+        assertEquals(2,circularListImpl.next().get());
+    }
 }
