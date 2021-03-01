@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * The test suite for testing the CircularList implementation
@@ -27,11 +27,18 @@ public class CircularListTest {
     @Test
     void testSize() {
         assertEquals(circularListImpl.size(), 0);
-        for(int i=1;i<10;i++) {
-            circularListImpl.add(i);
-            assertEquals(i, circularListImpl.size());
+        for(int elementNumber=1;elementNumber<10;elementNumber++) {
+            circularListImpl.add(elementNumber);
+            assertEquals(elementNumber, circularListImpl.size());
         }
     }
 
+    @Test
+    void testIsEmpty() {
+        assertTrue(circularListImpl.isEmpty());
+        circularListImpl.add(7);
+        assertFalse(circularListImpl.isEmpty());
+    }
 
+    
 }
