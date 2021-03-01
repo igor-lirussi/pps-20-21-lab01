@@ -74,4 +74,20 @@ public class CircularListTest {
     void testPreviousEmpty() {
         assertEquals(Optional.empty(),circularListImpl.previous());
     }
+
+    @Test
+    void testReset() {
+        assertTrue(circularListImpl.isEmpty());
+        assertEquals(0,circularListImpl.size());
+        circularListImpl.reset();
+        assertTrue(circularListImpl.isEmpty());
+        assertEquals(0,circularListImpl.size());
+        circularListImpl.add(1);
+        circularListImpl.add(2);
+        circularListImpl.add(3);
+        circularListImpl.reset();
+        assertEquals(2, circularListImpl.next().get());
+        circularListImpl.reset();
+        assertEquals(2, circularListImpl.next().get());
+    }
 }
