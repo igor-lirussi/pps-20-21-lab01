@@ -1,8 +1,8 @@
-import lab01.tdd.CircularList;
 import lab01.tdd.CircularListImpl;
-import org.junit.jupiter.api.Assertions;
+import lab01.tdd.EqualsStrategy;
+import lab01.tdd.EvenStrategy;
+import lab01.tdd.MultipleOfStrategy;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
@@ -90,4 +90,44 @@ public class CircularListTest {
         circularListImpl.reset();
         assertEquals(2, circularListImpl.next().get());
     }
+
+    @Test
+    void testNextStrategyEmpty() {
+        assertEquals(Optional.empty(), circularListImpl.next(new EvenStrategy()));
+        assertEquals(Optional.empty(), circularListImpl.next(new EqualsStrategy(3)));
+        assertEquals(Optional.empty(), circularListImpl.next(new MultipleOfStrategy(3)));
+    }
+    @Test
+    void testNextStrategyNotPresent() {
+        for (int number = 0; number < 12; number++) {
+            circularListImpl.add((number*2)+1);
+        }
+        assertEquals(Optional.empty(), circularListImpl.next(new EvenStrategy()));
+        assertEquals(Optional.empty(), circularListImpl.next(new EqualsStrategy(25)));
+        assertEquals(Optional.empty(), circularListImpl.next(new MultipleOfStrategy(25)));
+    }
+
+    @Test
+    void testNextStrategy() {
+        for (int number=0; number<12; number++ ) {
+            circularListImpl.add(number);
+        }
+        assertEquals(2, circularListImpl.next(new EvenStrategy()).get() );
+        assertEquals(4, circularListImpl.next(new EvenStrategy()).get() );
+        assertEquals(6, circularListImpl.next(new EvenStrategy()).get() );
+
+        assertEquals(6, circularListImpl.next(new EqualsStrategy(6)).get() );
+        assertEquals(8, circularListImpl.next(new EqualsStrategy(8)).get() );
+        assertEquals(11, circularListImpl.next(new EqualsStrategy(11)).get() );
+        assertEquals(3, circularListImpl.next(new EqualsStrategy(3)).get() );
+
+
+        assertEquals(6, circularListImpl.next(new MultipleOfStrategy(3)).get() );
+        assertEquals(9, circularListImpl.next(new MultipleOfStrategy(3)).get() );
+        assertEquals(0, circularListImpl.next(new MultipleOfStrategy(3)).get() );
+        assertEquals(3, circularListImpl.next(new MultipleOfStrategy(3)).get() );
+        assertEquals(4, circularListImpl.next(new MultipleOfStrategy(2)).get() );
+
+    }
+
 }
