@@ -1,7 +1,4 @@
-import lab01.tdd.CircularListImpl;
-import lab01.tdd.EqualsStrategy;
-import lab01.tdd.EvenStrategy;
-import lab01.tdd.MultipleOfStrategy;
+import lab01.tdd.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -127,6 +124,31 @@ public class CircularListTest {
         assertEquals(0, circularListImpl.next(new MultipleOfStrategy(3)).get() );
         assertEquals(3, circularListImpl.next(new MultipleOfStrategy(3)).get() );
         assertEquals(4, circularListImpl.next(new MultipleOfStrategy(2)).get() );
+
+    }
+
+    @Test
+    void testNextStrategyWithFactory() {
+        for (int number=0; number<12; number++ ) {
+            circularListImpl.add(number);
+        }
+        StrategyFactoryImpl strategyFactory = new StrategyFactoryImpl();
+
+        assertEquals(2, circularListImpl.next(strategyFactory.createEvenStrategy()).get() );
+        assertEquals(4, circularListImpl.next(strategyFactory.createEvenStrategy()).get() );
+        assertEquals(6, circularListImpl.next(strategyFactory.createEvenStrategy()).get() );
+
+        assertEquals(6, circularListImpl.next(strategyFactory.createEqualsStrategy(6)).get() );
+        assertEquals(8, circularListImpl.next(strategyFactory.createEqualsStrategy(8)).get() );
+        assertEquals(11, circularListImpl.next(strategyFactory.createEqualsStrategy(11)).get() );
+        assertEquals(3, circularListImpl.next(strategyFactory.createEqualsStrategy(3)).get() );
+
+
+        assertEquals(6, circularListImpl.next(strategyFactory.createMultipleOfStrategy(3)).get() );
+        assertEquals(9, circularListImpl.next(strategyFactory.createMultipleOfStrategy(3)).get() );
+        assertEquals(0, circularListImpl.next(strategyFactory.createMultipleOfStrategy(3)).get() );
+        assertEquals(3, circularListImpl.next(strategyFactory.createMultipleOfStrategy(3)).get() );
+        assertEquals(4, circularListImpl.next(strategyFactory.createMultipleOfStrategy(2)).get() );
 
     }
 
